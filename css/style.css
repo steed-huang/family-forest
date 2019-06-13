@@ -1,14 +1,22 @@
 @import url("https://fonts.googleapis.com/css?family=Rubik");
 
 #title {
-  text-align: center;
-  font-family: "Rubik", sans-serif;
   background-color: #b4eeb4;
-  font-style: bold;
+  font-family: "Rubik", sans-serif;
+  display: table;
   text-align: center;
-  font-size: 2vw;
+  font-style: bold;
+  position: absolute;
+  font-size: 1vw;
+  width: 100%;
 }
 
 body {
-  background: #f8f8f8;
+  background: #fff8dc;
+  margin: 0;
+  text-align: center;
+}
+
+canvas {
+  top: 20%;
 }
