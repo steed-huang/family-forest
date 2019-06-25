@@ -1,8 +1,6 @@
 var scene, camera, renderer, tree;
-var keyboard = {};
 var drawWidth = window.innerWidth;
-var drawHeight = window.innerHeight * 0.99; // It extends past end   at full innerHeight?
-var USE_WIREFRAME = false;
+var drawHeight = window.innerHeight;
 
 function init() {
   scene = new THREE.Scene();
