@@ -70,6 +70,12 @@ function animate() {
   renderer.render(scene, camera);
 }
 
+function windowResize() {
+  camera.aspect = window.innerWidth / window.innerHeight;
+  camera.updateProjectionMatrix();
+  renderer.setSize(window.innerWidth, window.innerHeight);
+}
+
 function loadModel(src, id, height, width, x, y, z) {
   let model = document.createElement("ml-model");
   model.setAttribute("src", src);
@@ -116,3 +122,4 @@ function loadModel(src, id, height, width, x, y, z) {
 }
 
 window.onload = init;
+window.addEventListener("resize", windowResize, false);
