@@ -70,7 +70,7 @@ function init() {
 function animate() {
   requestAnimationFrame(animate);
   if (tree) {
-    tree.rotation.y += 0.01;
+    tree.rotation.y += 0.005;
   }
   renderer.render(scene, camera);
 }
@@ -164,20 +164,51 @@ function changeMenu(button) {
       title.setAttribute("id", "pHeader");
       title.innerHTML = "Name";
       popup.append(title);
+
+      input = document.createElement("input");
+      input.setAttribute("type", "text");
+      input.setAttribute("id", "pSmallInput");
+      popup.append(input);
+
       title = document.createElement("h1");
       title.setAttribute("id", "pHeader");
       title.innerHTML = "Age";
       popup.append(title);
+
+      input = document.createElement("input");
+      input.setAttribute("type", "text");
+      input.setAttribute("id", "pSmallInput");
+      popup.append(input);
+
       title = document.createElement("h1");
       title.setAttribute("id", "pHeader");
       title.innerHTML = "Gender";
       popup.append(title);
+
+      input = document.createElement("input");
+      input.setAttribute("type", "text");
+      input.setAttribute("id", "pSmallInput");
+      popup.append(input);
+
+      confirm = document.createElement("button");
+      confirm.setAttribute("id", "confirmButton");
+      confirm.innerHTML = "APPLY";
+      popup.append(confirm);
       break;
     case "info":
       title = document.createElement("h1");
       title.setAttribute("id", "pHeader");
       title.innerHTML = "Enter Description";
       popup.append(title);
+
+      input = document.createElement("textarea");
+      input.setAttribute("id", "pLargeInput");
+      popup.append(input);
+
+      confirm = document.createElement("button");
+      confirm.setAttribute("id", "confirmButton");
+      confirm.innerHTML = "APPLY";
+      popup.append(confirm);
       break;
     case "other":
       title = document.createElement("h1");
