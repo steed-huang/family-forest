@@ -284,6 +284,7 @@ function changeTree(n) {
       curTree.model = "oval";
       break;
   }
+  updateInfo();
 }
 
 function addTree(src, scale, pos) {
@@ -325,14 +326,22 @@ function updateInfo() {
   let name = popup.getElementsByClassName("infoTitle")[0];
   name.innerHTML = curTree.person[0];
   let text = popup.getElementsByClassName("info");
-  console.log(name);
   text[0].innerHTML = "Age: " + curTree.person[1];
   text[1].innerHTML = "Gender: " + curTree.person[2];
   text[2].innerHTML = "Tree Style: " + curTree.model;
   text[3].innerHTML = "Description: " + curTree.desc;
 }
 
-function plantTree() {}
+function plantTree() {
+  trees.push(Object.assign({}, curTree));
+  curTree = {
+    model: "oak",
+    person: ["Name", "", ""],
+    desc: ""
+  };
+  updateInfo();
+  changeTree(0);
+}
 
 window.onload = init;
 window.addEventListener("resize", windowResize, false);
