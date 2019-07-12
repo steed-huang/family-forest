@@ -1,14 +1,25 @@
-var scene, camera, renderer, tree;
+var scene, camera, renderer, loader, tree;
 var drawWidth = window.innerWidth / 2;
 var drawHeight = window.innerHeight;
 
-var trees = []; // [model, person info, desc info, pos#]
+var curMen;
+var trees = [];
+var curTree = {
+  model: "oak",
+  person: ["Name", "Age", "Gender"],
+  desc: "Lorem Ipsum"
+};
 var model = {
-  pagetree:
-    "https://cdn.glitch.com/b5469c85-7f52-4fd5-a648-8d70ac85ec20%2Ftest.glb?v=1559756997603",
-  tree: "https://cdn.glitch.com/b5469c85-7f52-4fd5-a648-8d70ac85ec20%2Flowpolytree.glb",
-  lptree: "https://cdn.glitch.com/b5469c85-7f52-4fd5-a648-8d70ac85ec20%2Ftest2.glb",
-  balloon: "https://cdn.glitch.com/2671171a-572f-412a-8934-c57ee91f37bb%2Fballoon.fbx?1557858831042"
+  oak: "https://cdn.glitch.com/b5469c85-7f52-4fd5-a648-8d70ac85ec20%2Foak.glb?v=1562944365116",
+  spruce:
+    "https://cdn.glitch.com/b5469c85-7f52-4fd5-a648-8d70ac85ec20%2Fspruce.glb?v=1562943689292",
+  long: "https://cdn.glitch.com/b5469c85-7f52-4fd5-a648-8d70ac85ec20%2Flong.glb?v=1562944386367",
+  palm: "https://cdn.glitch.com/b5469c85-7f52-4fd5-a648-8d70ac85ec20%2Fpalm.glb?v=1562944386589",
+  tall: "https://cdn.glitch.com/b5469c85-7f52-4fd5-a648-8d70ac85ec20%2Ftall.glb?v=1562944386648",
+  old: "https://cdn.glitch.com/b5469c85-7f52-4fd5-a648-8d70ac85ec20%2Fold.glb?v=1562944386824",
+  japanese:
+    "https://cdn.glitch.com/b5469c85-7f52-4fd5-a648-8d70ac85ec20%2Fjapanese.glb?v=1562944387133",
+  oval: "https://cdn.glitch.com/b5469c85-7f52-4fd5-a648-8d70ac85ec20%2Foval.glb?v=1562948388275"
 };
 
 function init() {
@@ -19,9 +30,9 @@ function init() {
   renderer.setSize(drawWidth, drawHeight);
   document.getElementById("viewer").appendChild(renderer.domElement);
 
-  // Model loading
-  var loader = new THREE.GLTFLoader();
-  loader.load(model.pagetree, function(gltf) {
+  // Default model
+  loader = new THREE.GLTFLoader();
+  loader.load(model.oak, function(gltf) {
     tree = gltf.scene;
     tree.scale.set(0.4, 0.5, 0.4);
     tree.position.set(0, -3, 0);
@@ -64,7 +75,7 @@ function init() {
     loadModel(model.lptree, i.toString(), 4000, 2000, x, -2, z);
   }
   */
-  changeMenu("style");
+  getMenu(0);
 }
 
 function animate() {
@@ -128,95 +139,154 @@ function loadModel(src, id, height, width, x, y, z) {
   document.body.appendChild(model);
 }
 
-function changeMenu(button) {
+function getMenu(n) {
+  curMen = n;
+  changeMenu();
+}
+
+function changeMenu() {
   let popup = document.getElementById("popup");
   while (popup.firstChild) {
     popup.removeChild(popup.firstChild);
   }
-  switch (button) {
-    case "style":
+  switch (curMen) {
+    case 0:
       title = document.createElement("h1");
-      title.setAttribute("id", "pHeader");
+      title.setAttribute("class", "pHeader");
       title.innerHTML = "Tree Type";
 
       let button = [];
-      for (let i = 0; i < 4; i++) {
+      for (let i = 0; i < 8; i++) {
         button[i] = document.createElement("button");
-        button[i].setAttribute("id", "pButton");
+        button[i].setAttribute("class", "pButton");
+        button[i].addEventListener("click", () => {
+          changeTree(i);
+        });
       }
 
       button[0].innerHTML = "Style 1";
       button[1].innerHTML = "Style 2";
       button[2].innerHTML = "Style 3";
       button[3].innerHTML = "Style 4";
+      button[4].innerHTML = "Style 5";
+      button[5].innerHTML = "Style 6";
+      button[6].innerHTML = "Style 7";
+      button[7].innerHTML = "Style 8";
 
       let butDiv = document.createElement("div");
       butDiv.setAttribute("id", "butdiv");
-      for (let i = 0; i < 4; i++) {
+      for (let i = 0; i < 8; i++) {
         butDiv.append(button[i]);
       }
 
       popup.append(title);
       popup.append(butDiv);
       break;
-    case "person":
+    case 1:
       title = document.createElement("h1");
-      title.setAttribute("id", "pHeader");
+      title.setAttribute("class", "pHeader");
       title.innerHTML = "Name";
       popup.append(title);
 
       input = document.createElement("input");
       input.setAttribute("type", "text");
-      input.setAttribute("id", "pSmallInput");
+      input.setAttribute("class", "pSmallInput");
       popup.append(input);
 
       title = document.createElement("h1");
-      title.setAttribute("id", "pHeader");
+      title.setAttribute("class", "pHeader");
       title.innerHTML = "Age";
       popup.append(title);
 
       input = document.createElement("input");
       input.setAttribute("type", "text");
-      input.setAttribute("id", "pSmallInput");
+      input.setAttribute("class", "pSmallInput");
       popup.append(input);
 
       title = document.createElement("h1");
-      title.setAttribute("id", "pHeader");
+      title.setAttribute("class", "pHeader");
       title.innerHTML = "Gender";
       popup.append(title);
 
       input = document.createElement("input");
       input.setAttribute("type", "text");
-      input.setAttribute("id", "pSmallInput");
+      input.setAttribute("class", "pSmallInput");
       popup.append(input);
 
       confirm = document.createElement("button");
-      confirm.setAttribute("id", "confirmButton");
+      confirm.setAttribute("class", "confirmButton");
       confirm.innerHTML = "APPLY";
       popup.append(confirm);
       break;
-    case "info":
+    case 2:
       title = document.createElement("h1");
-      title.setAttribute("id", "pHeader");
+      title.setAttribute("class", "pHeader");
       title.innerHTML = "Enter Description";
       popup.append(title);
 
       input = document.createElement("textarea");
-      input.setAttribute("id", "pLargeInput");
+      input.setAttribute("class", "pLargeInput");
       popup.append(input);
 
       confirm = document.createElement("button");
-      confirm.setAttribute("id", "confirmButton");
+      confirm.setAttribute("class", "confirmButton");
       confirm.innerHTML = "APPLY";
       popup.append(confirm);
       break;
-    case "other":
+    case 3:
       title = document.createElement("h1");
-      title.setAttribute("id", "pHeader");
+      title.setAttribute("class", "pHeader");
       title.innerHTML = "Other";
       popup.append(title);
       break;
   }
+}
+
+function changeTree(n) {
+  scene.remove(tree);
+  switch (n) {
+    case 0:
+      addTree(model.oak, [0.4, 0.5, 0.4], [0, -3, 0]);
+      break;
+    case 1:
+      addTree(model.spruce, [9, 9, 9], [0, -3, 0]);
+      break;
+    case 2:
+      addTree(model.long, [0.015, 0.015, 0.015], [0, -1, 0]);
+      break;
+    case 3:
+      addTree(model.palm, [0.9, 0.9, 0.9], [0, -3.5, 0]);
+      break;
+    case 4:
+      addTree(model.tall, [1.5, 1.5, 1.5], [0, -2.8, 0]);
+      break;
+    case 5:
+      addTree(model.old, [2.6, 2.6, 2.6], [0, 4.3, 0]);
+      break;
+    case 6:
+      addTree(model.japanese, [3.5, 5, 3.5], [0, -3, 0]);
+      break;
+    case 7:
+      addTree(model.oval, [2.7, 2.7, 2.7], [0, 6.5, 0]);
+      break;
+  }
+}
+
+function addTree(src, scale, pos) {
+  loader.load(src, function(gltf) {
+    tree = gltf.scene;
+    tree.scale.set(scale[0], scale[1], scale[2]);
+    tree.position.set(pos[0], pos[1], pos[2]);
+    // centers the model
+    if (src == model.old) {
+      tree.traverse(function(child) {
+        if (child.isMesh) {
+          child.geometry.center();
+        }
+      });
+    }
+    scene.add(tree);
+  });
 }
 
 window.onload = init;

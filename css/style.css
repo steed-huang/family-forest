@@ -22,7 +22,7 @@
   left: 0;
 }
 
-#button {
+div.button {
   background-image: radial-gradient(#e0e0e0, #989898);
   display: table;
   height: 25%;
@@ -30,7 +30,7 @@
   z-index: 0;
 }
 
-#button p {
+div.button p {
   font-family: "Rubik", sans-serif;
   text-align: center;
   font-style: bold;
@@ -40,14 +40,13 @@
   vertical-align: middle;
 }
 
-#button:hover {
+div.button:hover {
   background-image: radial-gradient(#dbd9d9, #dbd9d9);
   cursor: pointer;
 }
 
-#button:active {
+div.button:active {
   background-image: radial-gradient(#e8e8e8, #e8e8e8);
-  cursor: pointer;
 }
 
 #popup {
@@ -61,34 +60,34 @@
   z-index: -1;
 }
 
-#pHeader {
+h1.pHeader {
   font-family: "Rubik", sans-serif;
   font-style: bold;
   margin-top: 8%;
 }
 
-#pButton {
+button.pButton {
   font-family: "Rubik", sans-serif;
   font-style: bold;
   font-size: 150%;
   display: inline;
-  margin: 1% 1% 1% 1%;
+  margin: 1% 2% 1% 2%;
 }
 
-#pSmallInput {
+input.pSmallInput {
   font-size: 150%;
   height: 5%;
   width: 50%;
 }
 
-#pLargeInput {
+textarea.pLargeInput {
   font-size: 150%;
   height: 50%;
   width: 80%;
   vertical-align: top;
 }
 
-#confirmButton {
+button.confirmButton {
   display: block;
   font-size: 200%;
   margin-top: 10%;
@@ -103,6 +102,18 @@
   height: 90%;
   top: 10%;
   right: 0;
+}
+
+#plantButton {
+  font-family: "Rubik", sans-serif;
+  color: #282828;
+  font-style: bold;
+  font-size: 150%;
+  position: absolute;
+  background: #48c748;
+  bottom: 5%;
+  right: 25%;
+  transform: translate(50%, 0%);
 }
 
 body {
