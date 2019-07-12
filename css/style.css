@@ -164,3 +164,7 @@ body {
   margin: 0;
   overflow: hidden;
 }
+
+ml-model {
+  z-index: -99;
+}

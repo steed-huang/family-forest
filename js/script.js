@@ -60,21 +60,6 @@ function init() {
   camera.lookAt(new THREE.Vector3(0, 3, 0));
 
   animate();
-
-  // Prismatic //
-  /*
-  let theta = 0;
-  let delta_t = 0;
-  let x = 0 + 5 * Math.cos(theta);
-  let z = 3 + 5 * Math.sin(theta);
-  console.log(delta_t);
-  for (let i = 0; i < 8; i++) {
-    theta += i * (Math.PI / 4);
-    x = Math.round(0 + 5 * Math.cos(theta));
-    z = Math.round(3 + 5 * Math.sin(theta));
-    loadModel(model.lptree, i.toString(), 4000, 2000, x, -2, z);
-  }
-  */
   getMenu(0);
 }
 
@@ -137,6 +122,21 @@ function loadModel(src, id, height, width, x, y, z) {
   */
 
   document.body.appendChild(model);
+}
+
+function createTree(n, t) {
+  let theta = 0;
+  let x = 0 + 5 * Math.cos(theta);
+  let z = 3 + 5 * Math.sin(theta);
+  for (let i = 0; i < 8; i++) {
+    theta += i * (Math.PI / 4);
+    x = Math.round(0 + 5 * Math.cos(theta));
+    z = Math.round(3 + 5 * Math.sin(theta));
+    if (i == n) {
+      loadModel(model[t.model], i.toString(), 2000, 1000, x, -2, z);
+      break;
+    }
+  }
 }
 
 function getMenu(n) {
@@ -333,7 +333,9 @@ function updateInfo() {
 }
 
 function plantTree() {
-  trees.push(Object.assign({}, curTree));
+  let treeCopy = Object.assign({}, curTree);
+  trees.push(treeCopy);
+  createTree(trees.indexOf(treeCopy), treeCopy);
   curTree = {
     model: "oak",
     person: ["Name", "", ""],
