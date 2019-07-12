@@ -6,8 +6,8 @@ var curMen;
 var trees = [];
 var curTree = {
   model: "oak",
-  person: ["Name", "Age", "Gender"],
-  desc: "Lorem Ipsum"
+  person: ["Name", "", ""],
+  desc: ""
 };
 var model = {
   oak: "https://cdn.glitch.com/b5469c85-7f52-4fd5-a648-8d70ac85ec20%2Foak.glb?v=1562944365116",
@@ -216,6 +216,9 @@ function changeMenu() {
       confirm = document.createElement("button");
       confirm.setAttribute("class", "confirmButton");
       confirm.innerHTML = "APPLY";
+      confirm.addEventListener("click", () => {
+        getInfo();
+      });
       popup.append(confirm);
       break;
     case 2:
@@ -231,6 +234,9 @@ function changeMenu() {
       confirm = document.createElement("button");
       confirm.setAttribute("class", "confirmButton");
       confirm.innerHTML = "APPLY";
+      confirm.addEventListener("click", () => {
+        getInfo();
+      });
       popup.append(confirm);
       break;
     case 3:
@@ -247,27 +253,35 @@ function changeTree(n) {
   switch (n) {
     case 0:
       addTree(model.oak, [0.4, 0.5, 0.4], [0, -3, 0]);
+      curTree.model = "oak";
       break;
     case 1:
       addTree(model.spruce, [9, 9, 9], [0, -3, 0]);
+      curTree.model = "spruce";
       break;
     case 2:
       addTree(model.long, [0.015, 0.015, 0.015], [0, -1, 0]);
+      curTree.model = "long";
       break;
     case 3:
       addTree(model.palm, [0.9, 0.9, 0.9], [0, -3.5, 0]);
+      curTree.model = "palm";
       break;
     case 4:
       addTree(model.tall, [1.5, 1.5, 1.5], [0, -2.8, 0]);
+      curTree.model = "tall";
       break;
     case 5:
       addTree(model.old, [2.6, 2.6, 2.6], [0, 4.3, 0]);
+      curTree.model = "old";
       break;
     case 6:
       addTree(model.japanese, [3.5, 5, 3.5], [0, -3, 0]);
+      curTree.model = "japanese";
       break;
     case 7:
       addTree(model.oval, [2.7, 2.7, 2.7], [0, 6.5, 0]);
+      curTree.model = "oval";
       break;
   }
 }
@@ -290,9 +304,35 @@ function addTree(src, scale, pos) {
 }
 
 function toggleInfo() {
-  let info = document.getElementById("info");
+  updateInfo();
+  let info = document.getElementById("infoPopup");
   info.style.visibility = info.style.visibility == "visible" ? "hidden" : "visible";
 }
+
+function getInfo() {
+  if (curMen == 1) {
+    let inputs = document.getElementsByClassName("pSmallInput");
+    curTree.person = [inputs[0].value, inputs[1].value, inputs[2].value];
+  } else {
+    let inputs = document.getElementsByClassName("pLargeInput");
+    curTree.desc = inputs[0].value;
+  }
+  updateInfo();
+}
+
+function updateInfo() {
+  let popup = document.getElementById("infoPopup");
+  let name = popup.getElementsByClassName("infoTitle")[0];
+  name.innerHTML = curTree.person[0];
+  let text = popup.getElementsByClassName("info");
+  console.log(name);
+  text[0].innerHTML = "Age: " + curTree.person[1];
+  text[1].innerHTML = "Gender: " + curTree.person[2];
+  text[2].innerHTML = "Tree Style: " + curTree.model;
+  text[3].innerHTML = "Description: " + curTree.desc;
+}
+
+function plantTree() {}
 
 window.onload = init;
 window.addEventListener("resize", windowResize, false);
