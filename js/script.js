@@ -125,7 +125,26 @@ function loadModel(src, id, height, width, x, y, z) {
   document.body.appendChild(model);
 }
 
-function changeMenu(n) {}
+function changeMenu(button) {
+  let popup = document.getElementById("popup");
+  while (popup.firstChild) {
+    popup.removeChild(popup.firstChild);
+  }
+  switch (button) {
+    case "style":
+      popup.innerHTML += "style";
+      break;
+    case "person":
+      popup.innerHTML += "person";
+      break;
+    case "info":
+      popup.innerHTML += "info";
+      break;
+    case "other":
+      popup.innerHTML += "other";
+      break;
+  }
+}
 
 window.onload = init;
 window.addEventListener("resize", windowResize, false);

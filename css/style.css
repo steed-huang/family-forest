@@ -48,10 +48,10 @@
 #popup {
   position: absolute;
   background-color: #e8e8e8;
-  width: 50%;
-  height: 100%;
-  left: 0;
-  top: 0;
+  width: 40%;
+  height: 90%;
+  left: 10%;
+  top: 10%;
   z-index: -1;
 }
 
@@ -64,7 +64,7 @@
 }
 
 body {
-  background: #fff8dc;
+  background: lightblue;
   margin: 0;
   overflow: hidden;
 }
