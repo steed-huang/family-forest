@@ -32,6 +32,7 @@
 
 #button p {
   font-family: "Rubik", sans-serif;
+  text-align: center;
   font-style: bold;
   font-size: 3.5vh;
   color: #282828;
@@ -39,14 +40,31 @@
   vertical-align: middle;
 }
 
+#button:hover {
+  background-image: radial-gradient(#e8e8e8, #e8e8e8);
+  cursor: pointer;
+}
+
+#popup {
+  position: absolute;
+  background-color: #e8e8e8;
+  width: 50%;
+  height: 100%;
+  left: 0;
+  top: 0;
+  z-index: -1;
+}
+
+#viewer {
+  position: absolute;
+  width: 50%;
+  height: 90%;
+  top: 10%;
+  right: 0;
+}
+
 body {
   background: #fff8dc;
   margin: 0;
   overflow: hidden;
-  text-align: center;
-}
-
-canvas {
-  top: 20%;
-  display: block;
 }

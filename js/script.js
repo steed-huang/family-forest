@@ -1,5 +1,5 @@
 var scene, camera, renderer, tree;
-var drawWidth = window.innerWidth;
+var drawWidth = window.innerWidth / 2;
 var drawHeight = window.innerHeight;
 var model = {
   pagetree:
@@ -15,14 +15,14 @@ function init() {
   camera = new THREE.PerspectiveCamera(70, drawWidth / drawHeight, 0.1, 1000);
   renderer = new THREE.WebGLRenderer({ alpha: true });
   renderer.setSize(drawWidth, drawHeight);
-  document.body.appendChild(renderer.domElement);
+  document.getElementById("viewer").appendChild(renderer.domElement);
 
   // Model loading
   var loader = new THREE.GLTFLoader();
   loader.load(model.pagetree, function(gltf) {
     tree = gltf.scene;
-    tree.scale.set(0.5, 0.5, 0.5);
-    tree.position.set(-10, -5, 12);
+    tree.scale.set(0.4, 0.5, 0.4);
+    tree.position.set(0, -3, 0);
     scene.add(tree);
   });
 
@@ -43,12 +43,13 @@ function init() {
   scene.add(light);
 
   // Camera
-  camera.position.set(0, 2, -10);
+  camera.position.set(0, 2, -20);
   camera.lookAt(new THREE.Vector3(0, 3, 0));
 
   animate();
 
   // Prismatic //
+  /*
   let theta = 0;
   let delta_t = 0;
   let x = 0 + 5 * Math.cos(theta);
@@ -60,6 +61,7 @@ function init() {
     z = Math.round(3 + 5 * Math.sin(theta));
     loadModel(model.lptree, i.toString(), 4000, 2000, x, -2, z);
   }
+  */
 }
 
 function animate() {
@@ -71,9 +73,11 @@ function animate() {
 }
 
 function windowResize() {
-  camera.aspect = window.innerWidth / window.innerHeight;
+  drawWidth = window.innerWidth / 2;
+  drawHeight = window.innerHeight;
+  camera.aspect = drawWidth / drawHeight;
   camera.updateProjectionMatrix();
-  renderer.setSize(window.innerWidth, window.innerHeight);
+  renderer.setSize(drawWidth, drawHeight);
 }
 
 function loadModel(src, id, height, width, x, y, z) {
@@ -120,6 +124,8 @@ function loadModel(src, id, height, width, x, y, z) {
 
   document.body.appendChild(model);
 }
+
+function changeMenu(n) {}
 
 window.onload = init;
 window.addEventListener("resize", windowResize, false);
