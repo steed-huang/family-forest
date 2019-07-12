@@ -1,6 +1,8 @@
 var scene, camera, renderer, tree;
 var drawWidth = window.innerWidth / 2;
 var drawHeight = window.innerHeight;
+
+var trees = []; // [model, person info, desc info, pos#]
 var model = {
   pagetree:
     "https://cdn.glitch.com/b5469c85-7f52-4fd5-a648-8d70ac85ec20%2Ftest.glb?v=1559756997603",
@@ -62,6 +64,7 @@ function init() {
     loadModel(model.lptree, i.toString(), 4000, 2000, x, -2, z);
   }
   */
+  changeMenu("style");
 }
 
 function animate() {
@@ -132,16 +135,55 @@ function changeMenu(button) {
   }
   switch (button) {
     case "style":
-      popup.innerHTML += "style";
+      title = document.createElement("h1");
+      title.setAttribute("id", "pHeader");
+      title.innerHTML = "Tree Type";
+
+      let button = [];
+      for (let i = 0; i < 4; i++) {
+        button[i] = document.createElement("button");
+        button[i].setAttribute("id", "pButton");
+      }
+
+      button[0].innerHTML = "Style 1";
+      button[1].innerHTML = "Style 2";
+      button[2].innerHTML = "Style 3";
+      button[3].innerHTML = "Style 4";
+
+      let butDiv = document.createElement("div");
+      butDiv.setAttribute("id", "butdiv");
+      for (let i = 0; i < 4; i++) {
+        butDiv.append(button[i]);
+      }
+
+      popup.append(title);
+      popup.append(butDiv);
       break;
     case "person":
-      popup.innerHTML += "person";
+      title = document.createElement("h1");
+      title.setAttribute("id", "pHeader");
+      title.innerHTML = "Name";
+      popup.append(title);
+      title = document.createElement("h1");
+      title.setAttribute("id", "pHeader");
+      title.innerHTML = "Age";
+      popup.append(title);
+      title = document.createElement("h1");
+      title.setAttribute("id", "pHeader");
+      title.innerHTML = "Gender";
+      popup.append(title);
       break;
     case "info":
-      popup.innerHTML += "info";
+      title = document.createElement("h1");
+      title.setAttribute("id", "pHeader");
+      title.innerHTML = "Enter Description";
+      popup.append(title);
       break;
     case "other":
-      popup.innerHTML += "other";
+      title = document.createElement("h1");
+      title.setAttribute("id", "pHeader");
+      title.innerHTML = "Other";
+      popup.append(title);
       break;
   }
 }

@@ -48,6 +48,7 @@
 #popup {
   position: absolute;
   background-color: #e8e8e8;
+  text-align: center;
   width: 40%;
   height: 90%;
   left: 10%;
@@ -55,8 +56,22 @@
   z-index: -1;
 }
 
+#pHeader {
+  font-family: "Rubik", sans-serif;
+  font-style: bold;
+}
+
+#pButton {
+  font-family: "Rubik", sans-serif;
+  font-style: bold;
+  font-size: 150%;
+  display: inline;
+  margin: 1% 1% 1% 1%;
+}
+
 #viewer {
   position: absolute;
+  background: lightblue;
   width: 50%;
   height: 90%;
   top: 10%;
@@ -64,7 +79,7 @@
 }
 
 body {
-  background: lightblue;
+  background: #e8e8e8;
   margin: 0;
   overflow: hidden;
 }
