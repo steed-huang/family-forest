@@ -105,7 +105,6 @@ button.confirmButton {
 }
 
 #plantButton {
-  font-family: "Rubik", sans-serif;
   color: #282828;
   font-style: bold;
   font-size: 150%;
@@ -114,6 +113,32 @@ button.confirmButton {
   bottom: 5%;
   right: 25%;
   transform: translate(50%, 0%);
+}
+
+#infoButton {
+  border-radius: 50%;
+  font-family: "Rubik", sans-serif;
+  color: white;
+  font-style: bold;
+  font-size: 300%;
+  position: absolute;
+  background: #282828;
+  width: 4%;
+  top: 15%;
+  right: 4%;
+  transform: translate(50%, 0%);
+  z-index: 3;
+}
+
+#info {
+  visibility: hidden;
+  position: absolute;
+  background: #c5bebe;
+  width: 42%;
+  height: 60%;
+  top: 20%;
+  right: 4%;
+  z-index: 2;
 }
 
 body {

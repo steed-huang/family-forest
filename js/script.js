@@ -289,5 +289,10 @@ function addTree(src, scale, pos) {
   });
 }
 
+function toggleInfo() {
+  let info = document.getElementById("info");
+  info.style.visibility = info.style.visibility == "visible" ? "hidden" : "visible";
+}
+
 window.onload = init;
 window.addEventListener("resize", windowResize, false);
