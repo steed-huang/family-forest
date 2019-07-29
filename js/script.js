@@ -1,4 +1,5 @@
 var scene, camera, renderer, loader, tree;
+var ambLight, hemiLight, dirLight, light;
 var drawWidth = window.innerWidth / 2;
 var drawHeight = window.innerHeight;
 
@@ -40,18 +41,18 @@ function init() {
   });
 
   // Lighting
-  var ambLight = new THREE.AmbientLight(0x404040, 1); // soft white light
+  ambLight = new THREE.AmbientLight(0x404040, 1); // soft white light
   scene.add(ambLight);
 
-  var hemiLight = new THREE.HemisphereLight(0xffffff, 0x444444);
+  hemiLight = new THREE.HemisphereLight(0xffffff, 0x444444, 1);
   hemiLight.position.set(0, 300, 0);
   scene.add(hemiLight);
 
-  var dirLight = new THREE.DirectionalLight(0xffffff, 10);
+  dirLight = new THREE.DirectionalLight(0xffffff, 10);
   dirLight.position.set(75, 300, -75);
   scene.add(dirLight);
 
-  var light = new THREE.PointLight(0x444444, 15, 30);
+  light = new THREE.PointLight(0x444444, 15, 30);
   light.position.set(-2, 0, -10);
   scene.add(light);
 
@@ -125,6 +126,7 @@ function loadModel(src, id, height, width, x, y, z) {
 }
 
 function createTree(n, t) {
+  // not working, should test on webpage and get working before ML
   let theta = 0;
   let x = 0 + 5 * Math.cos(theta);
   let z = 3 + 5 * Math.sin(theta);
@@ -137,6 +139,10 @@ function createTree(n, t) {
       break;
     }
   }
+}
+
+function viewInfo() {
+  window.open("info.html");
 }
 
 function getMenu(n) {
@@ -287,18 +293,58 @@ function changeTree(n) {
   updateInfo();
 }
 
+// oak spruce long palm tall old japanese oval
 function addTree(src, scale, pos) {
   loader.load(src, function(gltf) {
     tree = gltf.scene;
     tree.scale.set(scale[0], scale[1], scale[2]);
     tree.position.set(pos[0], pos[1], pos[2]);
-    // centers the model
-    if (src == model.old) {
+    if (src == model.oak) {
+      ambLight.intensity = 1;
+      hemiLight.intensity = 1;
+      dirLight.intensity = 10;
+      light.intensity = 15;
+    } else if (src == model.spruce) {
+      ambLight.intensity = 1;
+      hemiLight.intensity = 2.3;
+      dirLight.intensity = 0.1;
+      light.intensity = 1;
+    } else if (src == model.long) {
+      ambLight.intensity = 1.2;
+      hemiLight.intensity = 0.6;
+      dirLight.intensity = 0.7;
+      light.intensity = 1;
+    } else if (src == model.palm) {
+      ambLight.intensity = 0.3;
+      hemiLight.intensity = 0.8;
+      dirLight.intensity = 0.3;
+      light.intensity = 1.2;
+    } else if (src == model.tall) {
+      ambLight.intensity = 1.5;
+      hemiLight.intensity = 0.8;
+      dirLight.intensity = 2.7;
+      light.intensity = 5.3;
+    } else if (src == model.old) {
+      // centers the model
       tree.traverse(function(child) {
         if (child.isMesh) {
           child.geometry.center();
         }
       });
+      ambLight.intensity = 1.5;
+      hemiLight.intensity = 0.8;
+      dirLight.intensity = 2.7;
+      light.intensity = 5.3;
+    } else if (src == model.japanese) {
+      ambLight.intensity = 1.5;
+      hemiLight.intensity = 0.8;
+      dirLight.intensity = 2.7;
+      light.intensity = 5.3;
+    } else if (src == model.oval) {
+      ambLight.intensity = 1.5;
+      hemiLight.intensity = 2;
+      dirLight.intensity = 2.7;
+      light.intensity = 5.3;
     }
     scene.add(tree);
   });
