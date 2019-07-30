@@ -80,7 +80,7 @@ function windowResize() {
   renderer.setSize(drawWidth, drawHeight);
 }
 
-function loadModel(src, id, height, width, x, y, z) {
+function loadModel(src, id, height, width, l, x, y, z) {
   let model = document.createElement("ml-model");
   model.setAttribute("src", src);
   model.setAttribute("id", id);
@@ -109,18 +109,20 @@ function loadModel(src, id, height, width, x, y, z) {
   model.setAttribute("z-offset", zpos);
   model.setAttribute("unbounded", "true");
   model.setAttribute("raycast", true);
+  model.setAttribute("extracted-link", l);
 
-  /*
   model.addEventListener("node-raycast", function(e) {
+    if (e.detail.inputType === "headpos") {
+      if (e.detail.type === "nodeOnHeadEnter") {
+        model.wiggle();
+      }
+    }
     if (e.detail.inputType === "control") {
-      if (e.detail.type === "nodeOnControlExit") {
-        model.visibility = "visible";
-      } else {
-        model.visibility = "hidden";
+      if (e.detail.type === "nodeOnControlEnter") {
+        openInfo(l);
       }
     }
   });
-  */
 
   document.body.appendChild(model);
 }
@@ -135,11 +137,11 @@ function createTree(n, t) {
     x = Math.round(0 + 5 * Math.cos(theta));
     z = Math.round(3 + 5 * Math.sin(theta));
     if (i == n) {
-      loadModel(model[t.model], i.toString(), 2000, 1000, x, -2, z);
+      let link = getLink(t);
+      loadModel(model[t.model], i.toString(), 2000, 1000, link, x, -2, z);
       break;
     }
   }
-  // window.open(getLink(curTree));
 }
 
 function getLink(t) {
@@ -153,6 +155,11 @@ function getLink(t) {
     "&desc=" +
     t.desc
   );
+}
+
+function openInfo(l) {
+  //location.replace(l);
+  window.open(l);
 }
 
 function getMenu(n) {
@@ -169,7 +176,7 @@ function changeMenu() {
     case 0:
       title = document.createElement("h1");
       title.setAttribute("class", "pHeader");
-      title.innerHTML = "Tree Type";
+      title.innerHTML = "Tree Style";
 
       let button = [];
       for (let i = 0; i < 8; i++) {
@@ -180,14 +187,14 @@ function changeMenu() {
         });
       }
 
-      button[0].innerHTML = "Style 1";
-      button[1].innerHTML = "Style 2";
-      button[2].innerHTML = "Style 3";
-      button[3].innerHTML = "Style 4";
-      button[4].innerHTML = "Style 5";
-      button[5].innerHTML = "Style 6";
-      button[6].innerHTML = "Style 7";
-      button[7].innerHTML = "Style 8";
+      button[0].innerHTML = "Oak";
+      button[1].innerHTML = "Spruce";
+      button[2].innerHTML = "Baby";
+      button[3].innerHTML = "Palm";
+      button[4].innerHTML = "Sequoia";
+      button[5].innerHTML = "Acacia";
+      button[6].innerHTML = "Sakura";
+      button[7].innerHTML = "Garden";
 
       let butDiv = document.createElement("div");
       butDiv.setAttribute("id", "butdiv");
@@ -195,8 +202,14 @@ function changeMenu() {
         butDiv.append(button[i]);
       }
 
+      let treeInfo = document.createElement("div");
+      treeInfo.setAttribute("id", "treeInfo");
+      treeInfo.innerHTML =
+        "Lorem ipsum, the quick brown fox jumped over the lazy dog. My uncle is a cool guy.";
+
       popup.append(title);
       popup.append(butDiv);
+      popup.append(treeInfo);
       break;
     case 1:
       title = document.createElement("h1");
@@ -258,8 +271,21 @@ function changeMenu() {
     case 3:
       title = document.createElement("h1");
       title.setAttribute("class", "pHeader");
-      title.innerHTML = "Other";
+      title.innerHTML = "Tree Inspector";
+      let tutorial = document.createElement("div");
+      tutorial.setAttribute("id", "tutorial");
+      tutorial.innerHTML =
+        "Lorem ipsum, the quick brown fox jumped over the lazy dog. My uncle is a cool guy.";
+      let inspBut = document.createElement("button");
+      inspBut.setAttribute("id", "inspBut");
+      inspBut.addEventListener("click", () => {
+        changeTree(i);
+      });
+      inspBut.innerHTML = "OPEN";
+
       popup.append(title);
+      popup.append(tutorial);
+      popup.append(inspBut);
       break;
   }
 }

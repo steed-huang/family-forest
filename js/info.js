@@ -16,9 +16,9 @@ function changeText() {
   let n = document.getElementById("name").getElementsByTagName("h1")[0];
   let i = document.getElementById("info").getElementsByTagName("h1")[0];
   let d = document.getElementById("desc").getElementsByTagName("h1")[0];
-  n.innerHTML = name;
-  i.innerHTML = age + ", " + gender;
-  d.innerHTML = desc;
+  if (name && name != "false") n.innerHTML = name;
+  if (age && gender) i.innerHTML = age + ", " + gender;
+  if (desc) d.innerHTML = desc;
 }
 
 function getQV(variable) {
@@ -27,7 +27,11 @@ function getQV(variable) {
   for (var i = 0; i < vars.length; i++) {
     var pair = vars[i].split("=");
     if (pair[0] == variable) {
-      return pair[1].split("%20").join(" ");
+      return pair[1]
+        .split("%20")
+        .join(" ")
+        .split("%27")
+        .join("'");
     }
   }
   return false;
