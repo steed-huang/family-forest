@@ -139,10 +139,20 @@ function createTree(n, t) {
       break;
     }
   }
+  // window.open(getLink(curTree));
 }
 
-function viewInfo() {
-  window.open("info.html");
+function getLink(t) {
+  return (
+    "info.html?name=" +
+    t.person[0] +
+    "&age=" +
+    t.person[1] +
+    "&gen=" +
+    t.person[2] +
+    "&desc=" +
+    t.desc
+  );
 }
 
 function getMenu(n) {
