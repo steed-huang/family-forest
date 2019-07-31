@@ -23,6 +23,16 @@ var model = {
   oval: "https://cdn.glitch.com/b5469c85-7f52-4fd5-a648-8d70ac85ec20%2Foval.glb?v=1562948388275"
 };
 
+var audio = {
+  plant: new Audio("assets/plant.mp3"),
+  switch: new Audio("assets/switch.mp3"),
+  click: new Audio("assets/click.mp3"),
+  activate: new Audio("assets/activate.mp3"),
+  detect: new Audio("assets/detect.mp3"),
+  info: new Audio("assets/info.mp3"),
+  beep: new Audio("assets/beep.mp3")
+};
+
 function init() {
   // Three.JS //
   scene = new THREE.Scene();
@@ -128,6 +138,7 @@ function loadModel(src, id, tree, height, width, x, y, z) {
 
 function updateTreeInfo(t) {
   if (curMen == 3 && active == true) {
+    audio.detect.play();
     let n = document
       .getElementById("popup")
       .getElementsByTagName("div")[0]
@@ -169,6 +180,7 @@ function getMenu(n) {
 }
 
 function changeMenu() {
+  audio.click.play();
   let popup = document.getElementById("popup");
   while (popup.firstChild) {
     popup.removeChild(popup.firstChild);
@@ -184,6 +196,7 @@ function changeMenu() {
         button[i] = document.createElement("button");
         button[i].setAttribute("class", "pButton");
         button[i].addEventListener("click", () => {
+          audio.switch.play();
           changeTree(i);
         });
       }
@@ -250,6 +263,7 @@ function changeMenu() {
       confirm.setAttribute("class", "confirmButton");
       confirm.innerHTML = "APPLY";
       confirm.addEventListener("click", () => {
+        audio.beep.play();
         getInfo();
       });
       popup.append(confirm);
@@ -268,6 +282,7 @@ function changeMenu() {
       confirm.setAttribute("class", "confirmButton");
       confirm.innerHTML = "APPLY";
       confirm.addEventListener("click", () => {
+        audio.beep.play();
         getInfo();
       });
       popup.append(confirm);
@@ -288,6 +303,7 @@ function changeMenu() {
         "font-family: 'Rubik', sans-serif; font-style: bold; font-size: 300%; margin-top: 20%;"
       );
       inspBut.addEventListener("click", () => {
+        audio.activate.play();
         active = true;
         updateInsp();
       });
@@ -455,6 +471,7 @@ function addTree(src, scale, pos) {
 }
 
 function toggleInfo() {
+  audio.info.play();
   updateInfo();
   let info = document.getElementById("infoPopup");
   info.style.visibility = info.style.visibility == "visible" ? "hidden" : "visible";
@@ -483,6 +500,7 @@ function updateInfo() {
 }
 
 function plantTree() {
+  audio.plant.play();
   let treeCopy = Object.assign({}, curTree);
   trees.push(treeCopy);
   createTree(treeCopy);
