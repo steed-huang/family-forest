@@ -3,7 +3,7 @@ var ambLight, hemiLight, dirLight, light;
 var drawWidth = window.innerWidth / 2;
 var drawHeight = window.innerHeight;
 
-var curMen;
+var curMen, active;
 var trees = [];
 var curTree = {
   model: "oak",
@@ -80,7 +80,7 @@ function windowResize() {
   renderer.setSize(drawWidth, drawHeight);
 }
 
-function loadModel(src, id, height, width, l, x, y, z) {
+function loadModel(src, id, tree, height, width, x, y, z) {
   let model = document.createElement("ml-model");
   model.setAttribute("src", src);
   model.setAttribute("id", id);
@@ -109,7 +109,6 @@ function loadModel(src, id, height, width, l, x, y, z) {
   model.setAttribute("z-offset", zpos);
   model.setAttribute("unbounded", "true");
   model.setAttribute("raycast", true);
-  model.setAttribute("extracted-link", l);
 
   model.addEventListener("node-raycast", function(e) {
     if (e.detail.inputType === "headpos") {
@@ -119,7 +118,7 @@ function loadModel(src, id, height, width, l, x, y, z) {
     }
     if (e.detail.inputType === "control") {
       if (e.detail.type === "nodeOnControlEnter") {
-        openInfo(l);
+        updateTreeInfo(tree);
       }
     }
   });
@@ -127,21 +126,28 @@ function loadModel(src, id, height, width, l, x, y, z) {
   document.body.appendChild(model);
 }
 
-function createTree(n, t) {
-  // not working, should test on webpage and get working before ML
-  let theta = 0;
-  let x = 0 + 5 * Math.cos(theta);
-  let z = 3 + 5 * Math.sin(theta);
-  for (let i = 0; i < 8; i++) {
-    theta += i * (Math.PI / 4);
-    x = Math.round(0 + 5 * Math.cos(theta));
-    z = Math.round(3 + 5 * Math.sin(theta));
-    if (i == n) {
-      let link = getLink(t);
-      loadModel(model[t.model], i.toString(), 2000, 1000, link, x, -2, z);
-      break;
-    }
+function updateTreeInfo(t) {
+  if (curMen == 3 && active == true) {
+    let n = document
+      .getElementById("popup")
+      .getElementsByTagName("div")[0]
+      .getElementsByTagName("h1")[1];
+    let i = document
+      .getElementById("popup")
+      .getElementsByTagName("div")[0]
+      .getElementsByTagName("h1")[2];
+    let d = document
+      .getElementById("popup")
+      .getElementsByTagName("div")[0]
+      .getElementsByTagName("h1")[3];
+    n.innerHTML = t.person[0];
+    i.innerHTML = t.person[1] + ", " + t.person[2];
+    d.innerHTML = t.desc;
   }
+}
+
+function createTree(t) {
+  loadModel(model[t.model], "filler", t, 2000, 1000, 0, -3, 1);
 }
 
 function getLink(t) {
@@ -155,11 +161,6 @@ function getLink(t) {
     "&desc=" +
     t.desc
   );
-}
-
-function openInfo(l) {
-  //location.replace(l);
-  window.open(l);
 }
 
 function getMenu(n) {
@@ -202,14 +203,17 @@ function changeMenu() {
         butDiv.append(button[i]);
       }
 
-      let treeInfo = document.createElement("div");
-      treeInfo.setAttribute("id", "treeInfo");
-      treeInfo.innerHTML =
+      tInfo = document.createElement("div");
+      tInfo.setAttribute(
+        "style",
+        "text-align: center; font-family: 'Rubik', sans-serif; font-style: bold; font-size: 150%; margin-top: 25%; margin-left: 50%; transform: translate(-50%, 0%); width: 80%;"
+      );
+      tInfo.innerHTML =
         "Lorem ipsum, the quick brown fox jumped over the lazy dog. My uncle is a cool guy.";
 
       popup.append(title);
       popup.append(butDiv);
-      popup.append(treeInfo);
+      popup.append(tInfo);
       break;
     case 1:
       title = document.createElement("h1");
@@ -272,21 +276,85 @@ function changeMenu() {
       title = document.createElement("h1");
       title.setAttribute("class", "pHeader");
       title.innerHTML = "Tree Inspector";
-      let tutorial = document.createElement("div");
-      tutorial.setAttribute("id", "tutorial");
-      tutorial.innerHTML =
-        "Lorem ipsum, the quick brown fox jumped over the lazy dog. My uncle is a cool guy.";
-      let inspBut = document.createElement("button");
-      inspBut.setAttribute("id", "inspBut");
+      tutorial = document.createElement("div");
+      tutorial.setAttribute(
+        "style",
+        "text-align: center; font-family: 'Rubik', sans-serif; font-style: bold; font-size: 180%; margin-top: 0; margin-left: 50%; transform: translate(-50%, 0%); width: 80%;"
+      );
+      tutorial.innerHTML = "Point controller beam to trees to view their information";
+      inspBut = document.createElement("button");
+      inspBut.setAttribute(
+        "style",
+        "font-family: 'Rubik', sans-serif; font-style: bold; font-size: 300%; margin-top: 20%;"
+      );
       inspBut.addEventListener("click", () => {
-        changeTree(i);
+        active = true;
+        updateInsp();
       });
-      inspBut.innerHTML = "OPEN";
+      inspBut.innerHTML = "ACTIVATE";
 
       popup.append(title);
       popup.append(tutorial);
       popup.append(inspBut);
+      updateInsp();
       break;
+  }
+}
+
+function updateInsp() {
+  if (active) {
+    let popup = document.getElementById("popup");
+    while (popup.firstChild) {
+      popup.removeChild(popup.firstChild);
+    }
+    let wrapper = document.createElement("div");
+    wrapper.setAttribute(
+      "style",
+      "text-align: center; position: absolute; width: 80%; left: 50%; transform: translate(-50%, 0%); height: 100%;"
+    );
+
+    title = document.createElement("h1");
+    title.setAttribute("class", "pHeader");
+    title.innerHTML = "Tree Inspector";
+    let subTitle = document.createElement("h1");
+    subTitle.setAttribute(
+      "style",
+      "font-family: 'Rubik', sans-serif; color: #003300; font-style: bold; top: 5%; bottom: 0; font-size: 2.5vh;"
+    );
+    subTitle.innerHTML = "This tree is dedicated to:";
+    let pname = document.createElement("h1");
+    pname.setAttribute(
+      "style",
+      "font-family: 'Rubik', sans-serif; top: 0; color: #003300; font-style: bold; font-size: 7vh; position: absolute; top: 0; left: 50%; transform: translate(-50%, 0%); width: 100%;"
+    );
+    pname.innerHTML = "Person Name";
+    let pinfo = document.createElement("h1");
+    pinfo.setAttribute(
+      "style",
+      "font-family: 'Rubik', sans-serif; color: #003300; font-style: bold; font-size: 4vh; position: absolute; top: 12%; width: 100%;"
+    );
+    pinfo.innerHTML = "Age, Gender";
+    let pdesc = document.createElement("h1");
+    pdesc.setAttribute(
+      "style",
+      "font-family: 'Rubik', sans-serif; color: #26160d; font-style: bold; font-size: 3.5vh; position: absolute; top: 25%; width: 100%;"
+    );
+    pdesc.innerHTML =
+      "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam iaculis tellus sed ullamcorpe pellentesque. Vivamus at convallis eros.";
+    let pimg = document.createElement("img");
+    pimg.setAttribute(
+      "style",
+      "position: absolute; opacity: 0.15; height: 70%; width: 100%; transform: rotate(90deg); left: 0; top: 23%;z-index: 9999;"
+    );
+    pimg.setAttribute("src", "assets/branch.png");
+
+    popup.append(title);
+    popup.append(pimg);
+    wrapper.append(subTitle);
+    wrapper.append(pname);
+    wrapper.append(pinfo);
+    wrapper.append(pdesc);
+    popup.append(wrapper);
   }
 }
 
@@ -417,7 +485,7 @@ function updateInfo() {
 function plantTree() {
   let treeCopy = Object.assign({}, curTree);
   trees.push(treeCopy);
-  createTree(trees.indexOf(treeCopy), treeCopy);
+  createTree(treeCopy);
   curTree = {
     model: "oak",
     person: ["Name", "", ""],

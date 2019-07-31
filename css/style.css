@@ -28,6 +28,7 @@ div.button {
   height: 25%;
   width: 100%;
   z-index: 0;
+  text-align: center;
 }
 
 div.button p {
@@ -99,8 +100,75 @@ button.pButton {
 #inspBut {
   font-family: "Rubik", sans-serif;
   font-style: bold;
-  font-size: 400%;
+  font-size: 300%;
   margin-top: 20%;
+}
+
+#inspWrapper {
+  text-align: center;
+  position: absolute;
+  width: 80%;
+  left: 50%;
+  transform: translate(-50%, 0%);
+  height: 100%;
+}
+
+#subTitle {
+  font-family: "Rubik", sans-serif;
+  color: #003300;
+  font-style: bold;
+  top: 5%;
+  bottom: 0;
+  font-size: 2.5vh;
+}
+
+#pname {
+  font-family: "Rubik", sans-serif;
+  top: 0;
+  color: #003300;
+  font-style: bold;
+  font-size: 7vh;
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translate(-50%, 0%);
+  width: 100%;
+}
+
+#pinfo {
+  font-family: "Rubik", sans-serif;
+  color: #003300;
+  font-style: bold;
+  font-size: 4vh;
+  position: absolute;
+  top: 12%;
+  width: 100%;
+}
+
+#pdesc {
+  font-family: "Rubik", sans-serif;
+  color: #26160d;
+  font-style: bold;
+  font-size: 3.5vh;
+  position: absolute;
+  top: 25%;
+  width: 100%;
+}
+
+#pImage {
+  position: absolute;
+  opacity: 0.15;
+  height: 70%;
+  width: 100%;
+  transform: rotate(90deg);
+  left: 0;
+  top: 23%;
+  z-index: 9999;
+}
+
+#magImg {
+  margin-top: 55%;
+  transform: translate(0%, -50%);
 }
 
 input.pSmallInput {
