@@ -158,7 +158,7 @@ function updateTreeInfo(t) {
 }
 
 function createTree(t) {
-  loadModel(model[t.model], "filler", t, 2000, 1000, 0, -3, 1);
+  loadModel(model[t.model], "filler", t, 2000, 1000, 0, 0, 1);
 }
 
 function getLink(t) {
@@ -208,7 +208,7 @@ function changeMenu() {
       button[4].innerHTML = "Sequoia";
       button[5].innerHTML = "Acacia";
       button[6].innerHTML = "Sakura";
-      button[7].innerHTML = "Garden";
+      button[7].innerHTML = "Bonsai";
 
       let butDiv = document.createElement("div");
       butDiv.setAttribute("id", "butdiv");
@@ -219,7 +219,7 @@ function changeMenu() {
       tInfo = document.createElement("div");
       tInfo.setAttribute(
         "style",
-        "text-align: center; font-family: 'Rubik', sans-serif; font-style: bold; font-size: 150%; margin-top: 25%; margin-left: 50%; transform: translate(-50%, 0%); width: 80%;"
+        "text-align: center; font-family: 'Rubik', sans-serif; font-style: bold; font-size: 120%; margin-top: 8%; margin-left: 50%; transform: translate(-50%, 0%); width: 85%;"
       );
       tInfo.innerHTML =
         "Lorem ipsum, the quick brown fox jumped over the lazy dog. My uncle is a cool guy.";
@@ -227,6 +227,8 @@ function changeMenu() {
       popup.append(title);
       popup.append(butDiv);
       popup.append(tInfo);
+
+      changeTreeText();
       break;
     case 1:
       title = document.createElement("h1");
@@ -360,7 +362,7 @@ function updateInsp() {
     let pimg = document.createElement("img");
     pimg.setAttribute(
       "style",
-      "position: absolute; opacity: 0.15; height: 70%; width: 100%; transform: rotate(90deg); left: 0; top: 23%;z-index: 9999;"
+      "position: absolute; opacity: 0.15; height: 70%; width: 100%; transform: rotate(90deg); left: -10%; top: 31%;z-index: 9999;"
     );
     pimg.setAttribute("src", "assets/branch.png");
 
@@ -371,6 +373,35 @@ function updateInsp() {
     wrapper.append(pinfo);
     wrapper.append(pdesc);
     popup.append(wrapper);
+  }
+}
+
+function changeTreeText() {
+  let treeDesc = document.getElementById("popup").getElementsByTagName("div")[1];
+  if (curTree.model == "oak") {
+    treeDesc.innerHTML =
+      "Found all over the world, from the Americas to Asia, with over 600 known varieties. It is known as a cornerstone species, as its acorns and trunk provide food and shelter to thousands of species, many of which depend on the oak to survive. The oak represents a person who is caring but steadfast, willing and able to extend a helping hand to people in need no matter the situation.";
+  } else if (curTree.model == "spruce") {
+    treeDesc.innerHTML =
+      "Found in northern temperate regions of earth, spruce trees, like other evergreens, are covered in pointy spines. Within the needle covered branches lie seed filled pinecones, and even further inside the branches sweet sap can be found. The spruce represents a person who at first seems thorny and unapproachable, but turn out to be nice to be around once you get to know them.";
+  } else if (curTree.model == "long") {
+    treeDesc.innerHTML =
+      "Although small, the baby has boundless potential. The baby represents a person whos journey has only just begun, who knows what the future has in store?";
+  } else if (curTree.model == "palm") {
+    treeDesc.innerHTML =
+      "Found in tropical and subtropical regions like the carribeans, the palm trees branches were a symbol of peace in ancient civilisations. The palm represents a person who doesnt worry, but rather appreciates the good things in life, always looking on the bright side of things.";
+  } else if (curTree.model == "tall") {
+    treeDesc.innerHTML =
+      "The Sequoia, also known as the giant redwood, only grows in the Sierra Nevada Mountains of California. They are the largest individual trees on earth, with the largest growing to almost 100 meters tall. The Sequoia represents a person who is willing to see things from the bigger picture, and able to push themselves past their own boundaries.";
+  } else if (curTree.model == "old") {
+    treeDesc.innerHTML =
+      "Found in Africa and Australia, the Acacia possess a fire resistance that allows it to endure the common shrub fires that consume other less fortunate plants. The acacia represents a person who is stubborn and perseverant, who wont budge or falter no matter what the world throws at them.";
+  } else if (curTree.model == "japanese") {
+    treeDesc.innerHTML =
+      "The cherry blossom tree, the most famous of which is the Japanese cherry. It is famous for its blooming season when the branches of the trees are briefly filled with bright pink petals. The sakura represents a person who enjoys the now, making the most of today without worrying about tomorrow.";
+  } else if (curTree.model == "oval") {
+    treeDesc.innerHTML =
+      "A japanese art form of cultivating miniature trees. Bonsais are cultivated over multiple generations, with plans coming to fruition decades into the future. The bonsai represents a person who is organised and meticulous, willing to sacrifice luxuries in the present to see the payoff weeks, months, or even years into the future.";
   }
 }
 
@@ -410,6 +441,7 @@ function changeTree(n) {
       curTree.model = "oval";
       break;
   }
+  changeTreeText();
   updateInfo();
 }
 
