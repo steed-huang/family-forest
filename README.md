@@ -9,7 +9,9 @@ A mixed reality experience designed for the [Helio browser](https://www.magiclea
 
 ### Demo
 
-IMPORTANT: This is just a brief overview of the ui/ux from Google Chrome. I'm waiting on a copy of the video showcasing the mixed reality capabilities
+**[VIDEO DEMO OF MR/AR](https://www.youtube.com/watch?v=gDOTAKRge9o)**
+
+Overview of the ui/ux from Google Chrome:
 
 ![](assets/example.gif)
 
